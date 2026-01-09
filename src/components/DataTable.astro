@@ -1,0 +1,48 @@
+---
+export interface TableRow {
+    label: string;
+    value: string;
+}
+
+export interface Props {
+    title: string;
+    rows: TableRow[];
+    labelHeader?: string;
+    valueHeader?: string;
+}
+
+const {
+    title,
+    rows,
+    labelHeader = "Categoria",
+    valueHeader = "Valor",
+} = Astro.props;
+---
+
+<div class="card-standard flex flex-col h-full">
+    <h3 class="text-section-title mb-4 flex items-center gap-2">
+        <slot name="icon" />
+        {title}
+    </h3>
+
+    <div class="scroll-container flex-1">
+        <table class="table-minimal">
+            <thead>
+                <tr>
+                    <th>{labelHeader}</th>
+                    <th class="text-right">{valueHeader}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {
+                    rows.map((row) => (
+                        <tr>
+                            <td>{row.label}</td>
+                            <td class="text-right">{row.value}</td>
+                        </tr>
+                    ))
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

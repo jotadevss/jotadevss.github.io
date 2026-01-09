@@ -1,0 +1,225 @@
+---
+import Layout from "../layouts/Layout.astro";
+import KPICard from "../components/KPICard.astro";
+import SummaryCard from "../components/SummaryCard.astro";
+import DataTable from "../components/DataTable.astro";
+import CategoryChart from "../components/CategoryChart";
+import {
+	kpis,
+	inflows,
+	expenses,
+	formatCurrency,
+	getExpensesSorted,
+} from "../data/financials";
+
+// Prepare table data
+const expenseRows = getExpensesSorted().map((e) => ({
+	label: e.category,
+	value: formatCurrency(e.value),
+}));
+
+const inflowRows = inflows.map((i) => ({
+	label: i.date,
+	value: formatCurrency(i.value),
+}));
+
+// Format balance with sign
+const balanceFormatted = formatCurrency(kpis.balance);
+---
+
+<Layout>
+	<main class="min-h-screen p-4 md:p-6 lg:p-8">
+		<!-- Header -->
+		<header class="mb-8">
+			<h1 class="text-2xl font-light text-contrast mb-1">
+				Dashboard Financeiro
+			</h1>
+			<p class="text-caption text-muted">
+				Projeto de Construção • Atualizado em Janeiro 2026
+			</p>
+		</header>
+
+		<!-- Bento Grid Layout -->
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4">
+			<!-- Zone A: KPI Cards -->
+			<!-- Total Inflows (Accent) -->
+			<div class="lg:col-span-4">
+				<KPICard
+					variant="accent"
+					label="Total Entradas"
+					value={formatCurrency(kpis.totalInflows)}
+				>
+					<svg
+						slot="icon"
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="1.5"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					>
+						<circle cx="12" cy="12" r="10"></circle>
+						<path d="m8 12 4 4 4-4"></path>
+						<path d="M12 8v8"></path>
+					</svg>
+				</KPICard>
+			</div>
+
+			<!-- Total Spent (Contrast) -->
+			<div class="lg:col-span-4">
+				<KPICard
+					variant="contrast"
+					label="Total Gasto Obra"
+					value={formatCurrency(kpis.totalSpent)}
+				>
+					<svg
+						slot="icon"
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="1.5"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					>
+						<circle cx="12" cy="12" r="10"></circle>
+						<path d="m8 12 4-4 4 4"></path>
+						<path d="M12 16V8"></path>
+					</svg>
+				</KPICard>
+			</div>
+
+			<!-- Balance (Standard with Orange value) -->
+			<div class="lg:col-span-4">
+				<KPICard
+					variant="standard"
+					label="Saldo Atual"
+					value={balanceFormatted}
+				>
+					<svg
+						slot="icon"
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="1.5"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					>
+						<path
+							d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"
+						></path>
+						<path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"
+						></path>
+					</svg>
+				</KPICard>
+			</div>
+
+			<!-- Zone B: Chart and Summary -->
+			<!-- Category Bar Chart -->
+			<div class="lg:col-span-8 card-standard">
+				<h3 class="text-section-title mb-4 flex items-center gap-2">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="20"
+						height="20"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="1.5"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="text-muted"
+					>
+						<path d="M3 3v16a2 2 0 0 0 2 2h16"></path>
+						<path d="M7 16h8"></path>
+						<path d="M7 11h12"></path>
+						<path d="M7 6h3"></path>
+					</svg>
+					Gasto por Categoria
+				</h3>
+				<CategoryChart expenses={expenses} client:load />
+			</div>
+
+			<!-- Financial Summary -->
+			<div class="lg:col-span-4">
+				<SummaryCard />
+			</div>
+
+			<!-- Zone C: Data Tables -->
+			<!-- Category Spend Table -->
+			<div class="lg:col-span-6">
+				<DataTable
+					title="Detalhamento por Categoria"
+					rows={expenseRows}
+					labelHeader="Categoria"
+					valueHeader="Valor"
+				>
+					<svg
+						slot="icon"
+						xmlns="http://www.w3.org/2000/svg"
+						width="20"
+						height="20"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="1.5"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="text-muted"
+					>
+						<path
+							d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+						></path>
+						<path
+							d="M18.375 2.625a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4Z"
+						></path>
+					</svg>
+				</DataTable>
+			</div>
+
+			<!-- Inflow History Table -->
+			<div class="lg:col-span-6">
+				<DataTable
+					title="Histórico de Entradas"
+					rows={inflowRows}
+					labelHeader="Data"
+					valueHeader="Valor"
+				>
+					<svg
+						slot="icon"
+						xmlns="http://www.w3.org/2000/svg"
+						width="20"
+						height="20"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="1.5"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="text-muted"
+					>
+						<rect x="3" y="4" width="18" height="18" rx="0"></rect>
+						<path d="M16 2v4"></path>
+						<path d="M8 2v4"></path>
+						<path d="M3 10h18"></path>
+					</svg>
+				</DataTable>
+			</div>
+		</div>
+
+		<!-- Footer -->
+		<footer class="mt-8 pt-6 border-t border-border">
+			<p class="text-caption text-muted text-center">
+				Dashboard Financeiro • Projeto de Construção
+			</p>
+		</footer>
+	</main>
+</Layout>

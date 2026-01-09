@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+/* Plus Jakarta Sans Font Import */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100;200;300;400;500&display=swap');
+
+/* Design System CSS Custom Properties */
+@theme {
+  /* Colors */
+  --color-accent: #FF5A1F;
+  --color-contrast: #111111;
+  --color-muted: #71717A;
+  --color-border: #E4E4E7;
+  --color-bg: #FFFFFF;
+
+  /* Font Family */
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+
+  /* Font Weights (restricted to 100-500) */
+  --font-weight-thin: 100;
+  --font-weight-extralight: 200;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+
+  /* Spacing */
+  --spacing-card: 1.5rem;
+  --spacing-grid: 1rem;
+
+  /* Border Radius - Strict 0px everywhere */
+  --radius-none: 0px;
+}
+
+/* Base Styles */
+* {
+  border-radius: 0 !important;
+}
+
+html {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: #FFFFFF;
+  color: #111111;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography Utilities */
+.text-kpi-value {
+  font-size: 2.5rem;
+  font-weight: 300;
+  line-height: 1.1;
+}
+
+.text-kpi-label {
+  font-size: 0.875rem;
+  font-weight: 200;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.text-section-title {
+  font-size: 1.125rem;
+  font-weight: 400;
+}
+
+.text-body {
+  font-size: 0.875rem;
+  font-weight: 300;
+}
+
+.text-body-emphasis {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.text-caption {
+  font-size: 0.75rem;
+  font-weight: 200;
+}
+
+/* Card Variants */
+.card-accent {
+  background-color: #FF5A1F;
+  color: white;
+  padding: 1.5rem;
+}
+
+.card-contrast {
+  background-color: #111111;
+  color: white;
+  padding: 1.5rem;
+}
+
+.card-standard {
+  background-color: #FFFFFF;
+  color: #111111;
+  border: 1px solid #E4E4E7;
+  padding: 1.5rem;
+}
+
+/* Table Styles */
+.table-minimal {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-minimal th,
+.table-minimal td {
+  padding: 0.75rem 0;
+  text-align: left;
+  border-bottom: 1px solid #E4E4E7;
+}
+
+.table-minimal th {
+  font-weight: 400;
+  color: #71717A;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.table-minimal td {
+  font-weight: 300;
+}
+
+.table-minimal tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Scrollable Container */
+.scroll-container {
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.scroll-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background: #E4E4E7;
+}
+
+/* Recharts Overrides - Force remove focus outlines on click */
+.recharts-wrapper,
+.recharts-wrapper *:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.recharts-surface,
+.recharts-layer,
+.recharts-cartesian-axis-tick,
+.recharts-bar-rectangle {
+  outline: none !important;
+}

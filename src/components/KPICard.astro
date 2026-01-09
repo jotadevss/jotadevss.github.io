@@ -1,0 +1,46 @@
+---
+export interface Props {
+    variant: "accent" | "contrast" | "standard";
+    label: string;
+    value: string;
+    icon?: string;
+}
+
+const { variant, label, value, icon } = Astro.props;
+
+const cardClasses = {
+    accent: "card-accent",
+    contrast: "card-contrast",
+    standard: "card-standard",
+};
+
+const iconColorClasses = {
+    accent: "text-white",
+    contrast: "text-white",
+    standard: "text-contrast",
+};
+
+const valueColorClasses = {
+    accent: "text-white",
+    contrast: "text-white",
+    standard: "text-accent",
+};
+---
+
+<div class={`${cardClasses[variant]} flex flex-col gap-4`}>
+    <div class="flex items-center justify-between">
+        <span class="text-kpi-label opacity-80">{label}</span>
+        {
+            icon && (
+                <span class={iconColorClasses[variant]}>
+                    <slot name="icon" />
+                </span>
+            )
+        }
+    </div>
+    <div
+        class={`text-kpi-value ${variant === "standard" ? valueColorClasses[variant] : ""}`}
+    >
+        {value}
+    </div>
+</div>
