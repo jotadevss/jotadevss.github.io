@@ -1,0 +1,214 @@
+---
+import { formatCurrency } from "../data/financials";
+
+const totalService = 2500.0;
+const monthlyInstallment = 270.0;
+const installmentsPaid = 4;
+const totalPaid = installmentsPaid * monthlyInstallment;
+const remaining = 1420.0;
+const pixKey = "08828341343";
+
+// Calculate progress percentage
+const progress = (totalPaid / totalService) * 100;
+---
+
+<div
+    class="card-contrast relative overflow-hidden group border border-[#FF5A1F]/20"
+>
+    <!-- Flashy accent gradient background/glow -->
+    <div
+        class="absolute -right-20 -top-20 w-96 h-96 bg-[#FF5A1F] opacity-5 blur-[100px] rounded-full group-hover:opacity-10 transition-opacity duration-700"
+    >
+    </div>
+    <div
+        class="absolute -left-20 -bottom-20 w-64 h-64 bg-[#FF5A1F] opacity-5 blur-[80px] rounded-full"
+    >
+    </div>
+
+    <div class="flex flex-col gap-6 relative z-10">
+        <!-- Header Section -->
+        <div class="flex items-start justify-between">
+            <div class="flex items-center gap-4">
+                <div
+                    class="p-3 bg-white/5 rounded-lg text-[#FF5A1F] border border-[#FF5A1F]/20 shrink-0"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <rect width="20" height="14" x="2" y="5" rx="2"></rect>
+                        <line x1="2" x2="22" y1="10" y2="10"></line>
+                    </svg>
+                </div>
+                <div class="pr-6">
+                    <h3 class="text-lg font-medium text-white">
+                        Pagamento de Serviço
+                    </h3>
+                    <p class="text-sm text-gray-400 font-light">
+                        Controle de Despesas da Obra
+                    </p>
+                </div>
+            </div>
+            <div class="text-right">
+                <p
+                    class="text-[10px] uppercase tracking-wider text-gray-500 mb-1"
+                >
+                    Valor Total
+                </p>
+                <p class="text-lg text-white font-light">
+                    {formatCurrency(totalService)}
+                </p>
+            </div>
+        </div>
+
+        <!-- Progress Section -->
+        <div class="space-y-2">
+            <div class="flex justify-between text-xs uppercase tracking-wider">
+                <span class="text-[#FF5A1F]"
+                    >{installmentsPaid} parcelas pagas</span
+                >
+                <span class="text-gray-500"
+                    >Restante: {formatCurrency(remaining)}</span
+                >
+            </div>
+            <div class="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+                <div
+                    class="h-full bg-[#FF5A1F] transition-all duration-1000 ease-out"
+                    style={`width: ${progress}%`}
+                >
+                </div>
+            </div>
+            <div
+                class="flex justify-between text-xs font-light text-gray-400 mt-1"
+            >
+                <span>{formatCurrency(totalPaid)}</span>
+                <span>{formatCurrency(totalService)}</span>
+            </div>
+        </div>
+
+        <!-- Pix Info Section -->
+        <div
+            class="bg-white/5 rounded-lg p-4 border border-white/5 flex flex-col md:flex-row items-center justify-between gap-4"
+        >
+            <div class="flex items-center gap-3 w-full md:w-auto">
+                <div class="p-2 bg-[#32BCAD]/10 text-[#32BCAD] rounded-md">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                </div>
+                <div>
+                    <p
+                        class="text-[10px] uppercase tracking-wider text-gray-500 mb-0.5"
+                    >
+                        Chave PIX (CPF)
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <p
+                            class="text-base text-white font-mono tracking-wide selection:bg-[#FF5A1F] selection:text-white"
+                        >
+                            {pixKey}
+                        </p>
+                        <button
+                            id="copy-pix-btn"
+                            class="flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-all cursor-pointer border border-transparent hover:border-white/10"
+                            aria-label="Copiar chave PIX"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="12"
+                                height="12"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <rect
+                                    width="14"
+                                    height="14"
+                                    x="8"
+                                    y="8"
+                                    rx="2"
+                                    ry="2"></rect>
+                                <path
+                                    d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+                                ></path>
+                            </svg>
+                            <span id="copy-label">Copiar chave pix</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="w-full md:w-auto border-t md:border-t-0 md:border-l border-white/10 pt-3 md:pt-0 md:pl-4 text-center md:text-right"
+            >
+                <p
+                    class="text-[10px] uppercase tracking-wider text-gray-500 mb-0.5"
+                >
+                    Valor Atual a Pagar
+                </p>
+                <p class="text-xl text-[#FF5A1F] font-medium">
+                    {formatCurrency(remaining)}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script define:vars={{ pixKey }}>
+    const copyBtn = document.getElementById("copy-pix-btn");
+    const label = document.getElementById("copy-label");
+
+    if (copyBtn) {
+        copyBtn.addEventListener("click", async () => {
+            try {
+                await navigator.clipboard.writeText(pixKey);
+
+                // Visual feedback
+                const originalText = label.innerText;
+                label.innerText = "Copiado!";
+                copyBtn.classList.add("text-[#32BCAD]", "bg-[#32BCAD]/10");
+                copyBtn.classList.remove(
+                    "text-gray-400",
+                    "hover:text-white",
+                    "hover:bg-white/5",
+                );
+
+                setTimeout(() => {
+                    label.innerText = originalText;
+                    copyBtn.classList.remove(
+                        "text-[#32BCAD]",
+                        "bg-[#32BCAD]/10",
+                    );
+                    copyBtn.classList.add(
+                        "text-gray-400",
+                        "hover:text-white",
+                        "hover:bg-white/5",
+                    );
+                }, 2000);
+            } catch (err) {
+                console.error("Failed to copy:", err);
+            }
+        });
+    }
+</script>

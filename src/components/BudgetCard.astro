@@ -1,0 +1,199 @@
+---
+import { formatCurrency } from "../data/financials";
+
+// Use precise values from the image
+const totalSpent = 342121.15;
+const goal = 320000.0;
+const difference = totalSpent - goal; // 22,121.15
+const isOverBudget = difference > 0;
+
+// Update to Cyan/Sky theme (lighter, fits palette)
+const cardColor = "#06b6d4"; // Cyan-500
+const cardColorBg = "bg-[#06b6d4]";
+const cardColorText = "text-[#06b6d4]";
+const cardBorder = "border-[#06b6d4]/20";
+---
+
+<div
+    class={`card-contrast relative overflow-hidden group border ${cardBorder}`}
+>
+    <!-- Ambient Glow -->
+    <div
+        class={`absolute -right-20 -top-20 w-96 h-96 ${cardColorBg} opacity-5 blur-[100px] rounded-full group-hover:opacity-10 transition-opacity duration-700`}
+    >
+    </div>
+    <div
+        class={`absolute -left-20 -bottom-20 w-64 h-64 ${cardColorBg} opacity-5 blur-[80px] rounded-full text-white`}
+    >
+    </div>
+
+    <div class="flex flex-col gap-8 relative z-10">
+        <!-- Header: Title and Overall Status -->
+        <div
+            class="flex items-center justify-between border-b border-white/5 pb-4"
+        >
+            <div class="flex items-center gap-4">
+                <div
+                    class={`p-2.5 bg-white/5 rounded-lg ${cardColorText} border ${cardBorder} shrink-0`}
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M12 2v20"></path>
+                        <path
+                            d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+                        ></path>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-medium text-white tracking-tight">
+                        Meta vs. Realizado
+                    </h3>
+                    <p
+                        class="text-xs text-gray-400 font-light uppercase tracking-widest"
+                    >
+                        Performance Orçamentária
+                    </p>
+                </div>
+            </div>
+
+            <!-- Verdict Badge -->
+            <div
+                class={`px-3 py-1.5 rounded-md text-xs font-semibold tracking-wide border ${isOverBudget ? "bg-red-500/10 text-red-400 border-red-500/20" : "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"}`}
+            >
+                {isOverBudget ? "ACIMA DA META" : "DENTRO DA META"}
+            </div>
+        </div>
+
+        <!-- Metric Comparison Zone -->
+        <div
+            class="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12"
+        >
+            <!-- Context: Planned vs Actual -->
+            <div class="flex-1 w-full space-y-6">
+                <!-- Row 1: Goal -->
+                <div class="flex items-center justify-between group/item">
+                    <span
+                        class="text-xs uppercase tracking-wider text-gray-500 group-hover/item:text-gray-300 transition-colors"
+                        >Meta Estipulada</span
+                    >
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-24 h-px bg-white/10 group-hover/item:bg-white/20 transition-colors"
+                        >
+                        </div>
+                        <span
+                            class="text-lg font-light text-gray-300 tabular-nums"
+                            >{formatCurrency(goal)}</span
+                        >
+                    </div>
+                </div>
+
+                <!-- Row 2: Actual -->
+                <div class="flex items-center justify-between group/item">
+                    <span
+                        class="text-xs uppercase tracking-wider text-gray-500 group-hover/item:text-gray-300 transition-colors"
+                        >Total Gasto</span
+                    >
+                    <div class="flex items-center gap-3">
+                        <div
+                            class={`w-24 h-px transition-colors ${isOverBudget ? "bg-red-500/50" : "bg-emerald-500/50"}`}
+                        >
+                        </div>
+                        <span
+                            class="text-xl font-medium text-white tabular-nums"
+                            >{formatCurrency(totalSpent)}</span
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Metric: The Difference -->
+            <div class="justify-center text-center shrink-0 relative">
+                <div
+                    class="absolute -right-6 -top-6 w-24 h-24 bg-white/5 rounded-full blur-xl opacity-20"
+                >
+                </div>
+                <p
+                    class="text-[10px] uppercase tracking-wider text-gray-400 mb-1 relative z-10"
+                >
+                    {isOverBudget ? "Valor Excedente" : "Economia Atual"}
+                </p>
+                <div class="relative z-10 flex flex-col items-center">
+                    <span
+                        class={`text-4xl font-light tracking-tighter tabular-nums ${isOverBudget ? "text-red-400" : "text-emerald-400"}`}
+                    >
+                        {isOverBudget ? "+" : ""}{formatCurrency(difference)}
+                    </span>
+                    <span class="text-2xs text-gray-500 mt-1">
+                        {((difference / goal) * 100).toFixed(1)}% {
+                            isOverBudget ? "acima" : "abaixo"
+                        } do previsto
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer: Visual Bar -->
+        <div class="pt-2">
+            <div
+                class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden flex"
+            >
+                {
+                    /* Goal Marker (Implicitly 100% of the bar width if we treat max as max(goal, spent)) */
+                }
+                {/* Actually, let's make the bar relative to the max value */}
+                <div
+                    class={`h-full ${cardColorBg} transition-all duration-1000`}
+                    style={`width: ${Math.min((goal / Math.max(goal, totalSpent)) * 100, 100)}% opacity: 0.3`}
+                >
+                </div>
+            </div>
+
+            <!-- Custom Progress Bar Implementation -->
+            <div
+                class="relative h-2 w-full bg-white/5 rounded-full overflow-hidden mt-3"
+            >
+                <!-- Goal Line (The Target) -->
+                <div
+                    class="absolute top-0 bottom-0 left-0 bg-white/10 w-full"
+                    style={`width: ${Math.min((goal / Math.max(goal, totalSpent)) * 100, 100)}%`}
+                >
+                </div>
+
+                <!-- Spent Bar -->
+                <div
+                    class={`absolute top-0 bottom-0 left-0 transition-all duration-1000 ${isOverBudget ? "bg-gradient-to-r from-white/20 to-red-500" : "bg-gradient-to-r from-white/20 to-emerald-500"}`}
+                    style={`width: ${(totalSpent / Math.max(goal, totalSpent)) * 100}%`}
+                >
+                </div>
+
+                <!-- Goal Marker Line -->
+                <div
+                    class="absolute top-0 bottom-0 w-0.5 bg-white shadow-[0_0_10px_white] z-20"
+                    style={`left: ${Math.min((goal / Math.max(goal, totalSpent)) * 100, 100)}%`}
+                >
+                </div>
+            </div>
+            <div
+                class="flex justify-between mt-2 text-[10px] text-gray-500 font-mono tracking-wider"
+            >
+                <span>0%</span>
+                <span
+                    class="relative"
+                    style={`left: -${100 - (goal / Math.max(goal, totalSpent)) * 100}%`}
+                    >META 100%</span
+                >
+                <span>{((totalSpent / goal) * 100).toFixed(0)}%</span>
+            </div>
+        </div>
+    </div>
+</div>

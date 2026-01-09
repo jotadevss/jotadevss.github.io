@@ -120,7 +120,6 @@ export default function CategoryChart({ expenses }: CategoryChartProps) {
                     </Bar>
                 </BarChart>
             </ResponsiveContainer>
-            dd
         </div>
     );
 }

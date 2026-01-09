@@ -2,6 +2,9 @@
 import Layout from "../layouts/Layout.astro";
 import KPICard from "../components/KPICard.astro";
 import SummaryCard from "../components/SummaryCard.astro";
+import InsightCard from "../components/InsightCard.astro";
+import PaymentCard from "../components/PaymentCard.astro";
+import BudgetCard from "../components/BudgetCard.astro";
 import DataTable from "../components/DataTable.astro";
 import CategoryChart from "../components/CategoryChart";
 import {
@@ -42,31 +45,6 @@ const balanceFormatted = formatCurrency(kpis.balance);
 		<!-- Bento Grid Layout -->
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4">
 			<!-- Zone A: KPI Cards -->
-			<!-- Total Inflows (Accent) -->
-			<div class="lg:col-span-4">
-				<KPICard
-					variant="accent"
-					label="Total Entradas"
-					value={formatCurrency(kpis.totalInflows)}
-				>
-					<svg
-						slot="icon"
-						xmlns="http://www.w3.org/2000/svg"
-						width="24"
-						height="24"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="1.5"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					>
-						<circle cx="12" cy="12" r="10"></circle>
-						<path d="m8 12 4 4 4-4"></path>
-						<path d="M12 8v8"></path>
-					</svg>
-				</KPICard>
-			</div>
 
 			<!-- Total Spent (Contrast) -->
 			<div class="lg:col-span-4">
@@ -90,6 +68,32 @@ const balanceFormatted = formatCurrency(kpis.balance);
 						<circle cx="12" cy="12" r="10"></circle>
 						<path d="m8 12 4-4 4 4"></path>
 						<path d="M12 16V8"></path>
+					</svg>
+				</KPICard>
+			</div>
+
+			<!-- Total Inflows (Accent) -->
+			<div class="lg:col-span-4">
+				<KPICard
+					variant="accent"
+					label="Total Entradas"
+					value={formatCurrency(kpis.totalInflows)}
+				>
+					<svg
+						slot="icon"
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="1.5"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					>
+						<circle cx="12" cy="12" r="10"></circle>
+						<path d="m8 12 4 4 4-4"></path>
+						<path d="M12 8v8"></path>
 					</svg>
 				</KPICard>
 			</div>
@@ -148,12 +152,6 @@ const balanceFormatted = formatCurrency(kpis.balance);
 				<CategoryChart expenses={expenses} client:load />
 			</div>
 
-			<!-- Financial Summary -->
-			<div class="lg:col-span-4">
-				<SummaryCard />
-			</div>
-
-			<!-- Zone C: Data Tables -->
 			<!-- Category Spend Table -->
 			<div class="lg:col-span-6">
 				<DataTable
@@ -183,6 +181,27 @@ const balanceFormatted = formatCurrency(kpis.balance);
 						></path>
 					</svg>
 				</DataTable>
+			</div>
+
+			<!-- Special Insight Card -->
+			<div class="lg:col-span-12">
+				<InsightCard />
+			</div>
+
+			<!-- Zone C: Data Tables -->
+			<!-- Financial Summary -->
+			<div class="lg:col-span-4">
+				<SummaryCard />
+			</div>
+
+			<!-- Payment Info Card -->
+			<div class="lg:col-span-12">
+				<PaymentCard />
+			</div>
+
+			<!-- Budget Info Card -->
+			<div class="lg:col-span-12">
+				<BudgetCard />
 			</div>
 
 			<!-- Inflow History Table -->
